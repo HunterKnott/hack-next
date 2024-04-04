@@ -76,7 +76,7 @@ export default function LoginPage() {
                     <button
                     onClick={handleLogout}
                     className='w-full p-3 rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none'
-                    >Logout</button>
+                    >Log Out</button>
                 </div>
             </div>
         )
