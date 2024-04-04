@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+// import { supabase } from '@/supabase';
 import Link from 'next/link';
 
 export default async function Home() {
@@ -10,6 +11,20 @@ const supabase = createServerComponentClient({cookies: () => cookieStore});
 
 const {data: {user}} = await supabase.auth.getUser();
 console.log({user});
+
+const fetchRegistrations = async () => {
+  try {
+    let { data: registrations, error } = await supabase
+      .from('Registrations')
+      .select('*')
+    
+    if (registrations) {
+      console.log(registrations);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 if (!user) {
 
@@ -29,6 +44,7 @@ if (!user) {
 )
 }
 
+fetchRegistrations();
   return (
     <div className="flex flex-col justify-center bg-white">
       <img
