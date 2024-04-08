@@ -84,7 +84,7 @@ export default function LoginPage() {
 
     return (
         <main className='h-screen flex items-center justify-center bg-gray-800 p-6'>
-            <div className='bg-gray-900 p-8 rounder-lg shadow-md w-96'>
+            <div className='bg-gray-900 p-8 rounded-lg shadow-md w-96'>
                 <input
                 type="email"
                 name="email"
