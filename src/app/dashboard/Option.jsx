@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Option({ title, desc, buttonPath, buttonText, buttonColor}) {
+export default function Option({ title, desc, buttonPath, buttonText, buttonColor }) {
     const colorMap = {
         indigo: 'bg-indigo-600',
         teal: 'bg-teal-600',
