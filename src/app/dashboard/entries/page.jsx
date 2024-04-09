@@ -1,4 +1,4 @@
-import Background from '../../../../public/components/background'
+import Background from '../../../../public/components/Background'
 
 export default function Page() {
     return (
