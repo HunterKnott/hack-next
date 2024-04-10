@@ -1,5 +1,4 @@
 import Background from '../../public/components/Background'
-import Image from "next/image";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Link from 'next/link';

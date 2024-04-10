@@ -1,6 +1,5 @@
 import Background from '../../../public/components/Background'
 import Option from './Option.jsx';
-import Link from 'next/link';
 
 export default function Page() {
     return (

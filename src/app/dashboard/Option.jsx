@@ -1,6 +1,7 @@
+'use client';
 import Link from 'next/link';
 
-export default function Option({ title, desc, buttonPath, buttonText, buttonColor }) {
+export default function Option({ title, desc, buttonPath, onClick, buttonText, buttonColor }) {
     const colorMap = {
         indigo: 'bg-indigo-600',
         teal: 'bg-teal-600',
@@ -16,11 +17,17 @@ export default function Option({ title, desc, buttonPath, buttonText, buttonColo
                 {title}
             </h2>
             <p>{desc}</p>
-            <Link href={`${buttonPath}`}>
-                <button className={`w-full mb-2 p-3 rounded-md bg-${buttonColor}-600 text-white hover:bg-opacity-90 focus:outline-none`}>
+            {buttonPath ? (
+                <Link href={`${buttonPath}`}>
+                    <button className={`w-full mb-2 p-3 rounded-md bg-${buttonColor}-600 text-white hover:bg-opacity-90 focus:outline-none`}>
+                        {buttonText}
+                    </button>
+                </Link>
+            ) : (
+                <button onClick={onClick} className={`w-full mb-2 p-3 rounded-md bg-${buttonColor}-600 text-white hover:bg-opacity-90 focus:outline-none`}>
                     {buttonText}
                 </button>
-            </Link>
+            )}
         </div>
     )
 }
