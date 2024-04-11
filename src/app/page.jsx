@@ -31,14 +31,24 @@ export default async function Page() {
     return (
         <div className="relative">
             <Background />
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <h1 className="text-4xl font-bold text-white text-center mb-4">Welcome to the Campus Parking App</h1>
+            <div className="flex flex-col gap-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h1 className="text-4xl font-bold text-white text-center mb-4">Welcome to the Campus Parking App</h1>
                 <div className="bg-gray-900 p-8 rounded-lg shadow-md text-center">
                     <h1 className="mb-4 text-xl font-bold text-gray-300 dark:text-gray-300">
                         Navigate to the Dashboard
                     </h1>
                     <Link href={'/dashboard'}>
                         <button className="w-full mb-2 p-3 rounded-md bg-blue-600 text-white hover:bg-blue-700 focus:outline-none">
+                            Proceed
+                        </button>
+                    </Link>
+                </div>
+                <div className="bg-gray-900 p-8 rounded-lg shadow-md text-center">
+                    <h1 className="mb-4 text-xl font-bold text-gray-300 dark:text-gray-300">
+                        Navigate to the logout
+                    </h1>
+                    <Link href={'/login'}>
+                        <button className="w-full mb-2 p-3 rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none">
                             Proceed
                         </button>
                     </Link>

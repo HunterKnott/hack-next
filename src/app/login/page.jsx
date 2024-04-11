@@ -3,6 +3,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -62,20 +63,29 @@ export default function LoginPage() {
                     loading...
                 </h1>
             </div>
-
         )
     }
 
     if (user) {
         return (
-            <div className='h-screen flex flex-col items-center justify-center bg-gray-100'>
+            <div className='h-screen flex flex-row gap-4 items-center justify-center bg-gray-100'>
+                <div className='bg-black dark:bg-gray-900 p-8 rounder-lg shadow-md w-96 text-center'>
+                    <h1 className='mb-4 text-xl font-bold text-gray-300 dark:text-gray-300'>
+                        Go to home screen
+                    </h1>
+                    <Link href={'/..'}>
+                        <button
+                            className='w-full p-3 rounded-md bg-green-500 text-white hover:bg-green-600 focus:outline-none'
+                        >Navigate</button>
+                    </Link>
+                </div>
                 <div className='bg-black dark:bg-gray-900 p-8 rounder-lg shadow-md w-96 text-center'>
                     <h1 className='mb-4 text-xl font-bold text-gray-300 dark:text-gray-300'>
                         You are logged in
                     </h1>
                     <button
-                    onClick={handleLogout}
-                    className='w-full p-3 rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none'
+                        onClick={handleLogout}
+                        className='w-full p-3 rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none'
                     >Log Out</button>
                 </div>
             </div>
