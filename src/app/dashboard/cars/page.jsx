@@ -22,20 +22,25 @@ const insertCar = async (licensePlate) => {
 export default function Page() {
     const [cars, setCars] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    const [licensePlate, setLicensePlate] = useState('');   
+    const [licensePlate, setLicensePlate] = useState('');
+    const [isFiltered, setIsFiltered] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchCars();
-    }, []);
+    }, [isFiltered, searchTerm]);
 
     const fetchCars = async () => {
         const { data } = await supabase.from("Cars").select();
-        setCars(data);
-    }
-
-    const handleClick = () => {
-        console.log("Test");
-    }
+        if (isFiltered) {
+          const filteredByRegistration = data.filter(car => car.registration_id === null);
+          const filteredBySearch = filteredByRegistration.filter(car => car.license_plate.toLowerCase().includes(searchTerm.toLowerCase()));
+          setCars(filteredBySearch);
+        } else {
+            const filteredBySearch = data.filter(car => car.license_plate.toLowerCase().includes(searchTerm.toLowerCase()));
+          setCars(filteredBySearch);
+        }
+      }
 
     const handleAddClick = () => {
         setShowForm(!showForm);
@@ -46,28 +51,40 @@ export default function Page() {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Should this be removed to change table?
+        e.preventDefault();
         await insertCar(licensePlate);
         fetchCars();
         setShowForm(false);
         setLicensePlate('');
     }
 
+    const handleUnregisteredClick = () => {
+        setIsFiltered(!isFiltered);
+    }
+
+    const handleSearchTermChange = (e) => {
+        setSearchTerm(e.target.value);
+    }
+
+    const handleSearchClick = async () => {
+        await fetchCars();
+    }
+
     return (
-        <div className="bg-gray-700 bg-cover p-12 flex flex-col items-center">
+        <div className="bg-gradient-to-r from-green-400 to-blue-500 bg-cover p-12 flex flex-col items-center">
             <h1 className="text-4xl font-bold text-white my-8">Car Controller</h1>
             <div className="flex flex-row gap-4">
                 <Option
                     title="Add a Car"
-                    desc="Fill out a form to add a new car"
+                    desc={showForm ? "Hide form" : "Fill out a form to add a new car"}
                     onClick={handleAddClick}
                     buttonText="Apply"
                     buttonColor="emerald"
                 />
                 <Option
                     title="Unregistered Cars"
-                    desc="View all cars without a registration"
-                    onClick={handleClick}
+                    desc={isFiltered ? "View all cars" : "View all cars without a registration"}
+                    onClick={handleUnregisteredClick}
                     buttonText="Apply"
                     buttonColor="amber"
                 />
@@ -93,11 +110,26 @@ export default function Page() {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <button className={`w-full p-3 mt-4 bg-emerald-600 rounded-md text-white hover:bg-opacity-90 focus:outline-none`}>
+                    <button className="w-full p-3 mt-4 bg-emerald-600 rounded-md text-white hover:bg-opacity-90 focus:outline-none">
                         Add
                     </button>
                 </form>
             )}
+            <div className="mt-4 bg-gray-100 shadow appearance-none border rounded-md p-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Search by license plate
+                </label>
+                <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    placeholder="Ex: ABCD123"
+                    value={searchTerm}
+                    onChange={handleSearchTermChange}
+                />
+                <button className="w-full p-3 mt-4 bg-indigo-600 rounded-md text-white hover:bg-opacity-90 focus:outline-none">
+                    Search
+                </button>
+            </div>
             <div className="bg-gray-800 relative overflow-x-auto shadow-md sm:rounded-lg p-8 m-8">
                 <table className="w-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
